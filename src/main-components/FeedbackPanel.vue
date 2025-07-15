@@ -11,6 +11,7 @@ export default {
 </script>
 
 <template>
+  <!-- this component will serve to compute the nessecary feedback from the submission, getting the details of the users submission passed as props. -->
   <main></main>
 </template>
 

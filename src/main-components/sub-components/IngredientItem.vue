@@ -11,6 +11,7 @@ export default {
 </script>
 
 <template>
+  <!-- this is a single item in the users inventory, along with its relevant details and images. -->
   <main></main>
 </template>
 

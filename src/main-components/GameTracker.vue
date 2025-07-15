@@ -4,7 +4,9 @@ export default {
   data() {
     return {}
   },
-  methods: {},
+  methods: {
+    // updateTracker()  Updates the visual tracker (day progress, current tries in the day + tries left, and other misc stats like total potions made, etc.)
+  },
   computed: {},
   mounted() {},
 }

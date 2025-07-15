@@ -4,8 +4,12 @@ export default {
   data() {
     return {}
   },
-  methods: {},
-  computed: {},
+  methods: {
+    //addToInventory()  Adds crafted potions back to usable inventory for future rounds
+  },
+  computed: {
+    //compute out basic inventory stats, like total number of ingredients, number of potions, etc.
+  },
   mounted() {},
 }
 </script>
