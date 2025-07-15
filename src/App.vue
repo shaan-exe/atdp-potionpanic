@@ -1,13 +1,17 @@
-<script setup>
-console.log("Test JS.")
+<script>
+export default {
+  components: {},
+  data() {
+    return {}
+  },
+  methods: {},
+  computed: {},
+  mounted() {},
+}
 </script>
 
 <template>
-<h1>Test HTML.</h1>
+  <main></main>
 </template>
 
-<style scoped>
-h1{
-  background-color: red; /* Test CSS. */
-}
-</style>
+<style scoped></style>
