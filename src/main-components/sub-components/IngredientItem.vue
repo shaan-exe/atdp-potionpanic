@@ -15,9 +15,9 @@ export default {
 
 <template>
   <!-- this is a single item in the users inventory, along with its relevant details and images. -->
-  <main>
-    <span>{{ item.name }} ({{ item.quantity }})</span>
-  </main>
+  <li>
+    <span v-if="item">{{ item.name }} ({{ item.quantity }})</span>
+  </li>
 </template>
 
 <style scoped></style>
