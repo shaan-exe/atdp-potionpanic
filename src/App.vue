@@ -20,10 +20,7 @@ export default {
       // the major game state variables will be stored here, like the current potion request, the player's inventory, and the current mixer state.
       gameData: {
         currentRequest: null,
-        inventory: [
-          { id: 1, name: 'Herb', quantity: 5 },
-          { id: 2, name: 'Mushroom', quantity: 3 },
-        ],
+        inventory: [],
         mixerState: [],
         feedback: '',
         dayProgress: 0,
@@ -59,6 +56,7 @@ export default {
     following order: // 1. GameTracker // 2. FeedbackPanel // 3. IngredientInventory // 4.
     RequestDisplay // 5. PotionMixer -->
     <GameTracker :gameData="gameData"></GameTracker>
+    <FeedbackPanel :feedback="gameData.feedback"></FeedbackPanel>
     <IngredientInventory :inventoryData="gameData.inventory"></IngredientInventory>
   </main>
 </template>
