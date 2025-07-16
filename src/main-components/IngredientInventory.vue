@@ -1,6 +1,13 @@
 <script>
+import IngredientItem from './sub-components/IngredientItem.vue';
+
 export default {
-  components: {},
+  props: {
+    inventoryData: [],
+  },
+  components: {
+    IngredientItem
+  },
   data() {
     return {}
   },
@@ -15,7 +22,16 @@ export default {
 </script>
 
 <template>
-  <main></main>
+  <section>
+    <div>
+      <h2>Ingredient Inventory</h2>
+      <ul>
+        <IngredientItem v-for="item in inventoryData" :key="item.id"></IngredientItem>
+
+        </li>
+      </ul>
+    </div>
+  </section>
 </template>
 
 <style scoped></style>

@@ -1,5 +1,8 @@
 <script>
 export default {
+  props: {
+    gameData: {},
+  },
   components: {},
   data() {
     return {}
@@ -13,7 +16,15 @@ export default {
 </script>
 
 <template>
-  <main></main>
+  <section>
+    <div>
+      <p>{{ gameData.dayProgress }}</p>
+      <p>{{ gameData.triesLeft }}</p>
+    </div>
+    <div>
+      <p>{{ gameData.totalPotionsMade }}</p>
+    </div>
+  </section>
 </template>
 
 <style scoped></style>
