@@ -20,7 +20,10 @@ export default {
       // the major game state variables will be stored here, like the current potion request, the player's inventory, and the current mixer state.
       gameData: {
         currentRequest: null,
-        inventory: [{}],
+        inventory: [
+          { id: 1, name: 'Herb', quantity: 5 },
+          { id: 2, name: 'Mushroom', quantity: 3 },
+        ],
         mixerState: [],
         feedback: '',
         dayProgress: 0,
