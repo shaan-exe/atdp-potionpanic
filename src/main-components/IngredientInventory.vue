@@ -1,12 +1,12 @@
 <script>
-import IngredientItem from './sub-components/IngredientItem.vue';
+import IngredientItem from './sub-components/IngredientItem.vue'
 
 export default {
   props: {
     inventoryData: [],
   },
   components: {
-    IngredientItem
+    IngredientItem,
   },
   data() {
     return {}
@@ -27,8 +27,6 @@ export default {
       <h2>Ingredient Inventory</h2>
       <ul>
         <IngredientItem v-for="item in inventoryData" :key="item.id"></IngredientItem>
-
-        </li>
       </ul>
     </div>
   </section>
