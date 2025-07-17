@@ -58,6 +58,8 @@ export default {
     <GameTracker :gameData="gameData"></GameTracker>
     <FeedbackPanel :feedback="gameData.feedback"></FeedbackPanel>
     <IngredientInventory :inventoryData="gameData.inventory"></IngredientInventory>
+    <RequestDisplay></RequestDisplay>
+    hihihi
   </main>
 </template>
 

@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Potion of Learning",
+    "ingredients": ["Mandrake Root", "Phoenix Feather", "Dragon Scale"],
+    "rarity": "common",
+    "description": "Your very first potion, made with the help of your mentor. It enhances learning and memory."
+  },
+  {
+    "name": "Elixir of Vitality",
+    "ingredients": ["Phoenix Feather", "Mandrake Root"],
+    "rarity": "rare",
+    "description": "A potion that boosts vitality and energy, perfect for long study sessions."
+  },
+  {
+    "name": "Resilience Brew",
+    "ingredients": ["Dragon Scale", "Phoenix Feather"],
+    "rarity": "legendary",
+    "description": "A powerful potion that enhances physical resilience and strength."
+  }
+]
