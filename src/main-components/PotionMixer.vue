@@ -19,7 +19,11 @@ export default {
       this.selectedSlots[index] = ingredient
     },
     submitMix() {
+      if (this.selectedSlots.some((ing) => !ing || !ing.name)) {
+        return
+      }
       const selectedNames = this.selectedSlots.map((ing) => ing.name).sort()
+      console.log(this.request)
       const requestNames = this.request.ingredients.map((ing) => ing.name).sort()
 
       const match = JSON.stringify(selectedNames) === JSON.stringify(requestNames)

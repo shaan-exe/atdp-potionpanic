@@ -4,6 +4,7 @@ import FeedbackPanel from './main-components/FeedbackPanel.vue'
 import IngredientInventory from './main-components/IngredientInventory.vue'
 import RequestDisplay from './main-components/RequestDisplay.vue'
 import PotionMixer from './main-components/PotionMixer.vue'
+
 export default {
   components: {
     GameTracker,
@@ -19,7 +20,7 @@ export default {
     return {
       // the major game state variables will be stored here, like the current potion request, the player's inventory, and the current mixer state.
       gameData: {
-        currentRequest: null,
+        currentRequest: {},
         inventory: [
           {
             name: 'Mandrake Root',
@@ -27,6 +28,20 @@ export default {
             description:
               'A root known for its magical properties, often used in potions to enhance learning and memory.',
             rarity: 'common',
+          },
+          {
+            name: 'Phoenix Feather',
+            type: 'magical',
+            description:
+              'A feather from a phoenix, known for its regenerative properties and used in potions to boost vitality.',
+            rarity: 'rare',
+          },
+          {
+            name: 'Dragon Scale',
+            type: 'mineral',
+            description:
+              'A scale from a dragon, prized for its strength and used in potions to enhance physical resilience.',
+            rarity: 'legendary',
           },
         ],
         mixerState: [],
@@ -72,7 +87,7 @@ export default {
     <FeedbackPanel :feedback="gameData.feedback"></FeedbackPanel>
     <IngredientInventory :inventoryData="gameData.inventory"></IngredientInventory>
     <RequestDisplay @update-request="handleRequestChange"></RequestDisplay>
-    <PotionMixer :inventory="gameData.inventory"></PotionMixer>
+    <PotionMixer :request="gameData.currentRequest" :inventory="gameData.inventory"></PotionMixer>
   </main>
 </template>
 
