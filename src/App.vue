@@ -22,6 +22,7 @@ export default {
       // the major game state variables will be stored here, like the current potion request, the player's inventory, and the current mixer state.
       gameData: store.gameData,
       requestKey: 0,
+      feedbackPanelKey: 0,
     }
   },
   methods: {
@@ -49,12 +50,19 @@ export default {
       this.gameData.dayProgress = 0
       this.gameData.triesLeft = 3
       this.gameData.totalPotionsMade = 0
-      this.gameData.feedback =
-        "Welcome to Potion Panic! Let's start by brewing our first potion- the potion of learning."
-      //wait a second then go to next line of dialogue
-      setTimeout(() => {
-        this.gameData.feedback = 'You can see your current potion request down below.'
-      }, 1000)
+      store.gameData.currentFeedback = store.gameData.feedbackArray[store.gameData.feedbackIndex]
+    },
+    nextFeedback() {
+      store.gameData.feedbackIndex += 1
+      store.gameData.currentFeedback = store.gameData.feedbackArray[store.gameData.feedbackIndex]
+      this.feedbackPanelKey += 1
+    },
+    lastFeedback() {
+      if (store.gameData.feedbackIndex > 0) {
+        store.gameData.feedbackIndex -= 1
+        store.gameData.currentFeedback = store.gameData.feedbackArray[store.gameData.feedbackIndex]
+        this.feedbackPanelKey += 1
+      }
     },
   },
   computed: {
@@ -73,7 +81,12 @@ export default {
     following order: // 1. GameTracker // 2. FeedbackPanel // 3. IngredientInventory // 4.
     RequestDisplay // 5. PotionMixer -->
     <GameTracker :gameData="gameData"></GameTracker>
-    <FeedbackPanel :feedback="gameData.feedback"></FeedbackPanel>
+    <FeedbackPanel
+      :key="feedbackPanelKey"
+      @next-feedback="nextFeedback"
+      @last-feedback="lastFeedback"
+      :feedback="gameData.currentFeedback"
+    ></FeedbackPanel>
     <IngredientInventory :inventoryData="gameData.inventory"></IngredientInventory>
     <RequestDisplay :key="requestKey" @update-request="handleRequestChange"></RequestDisplay>
     <PotionMixer :request="gameData.currentRequest" :inventory="gameData.inventory"></PotionMixer>

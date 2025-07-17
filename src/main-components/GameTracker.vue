@@ -2,7 +2,7 @@
 import store from '../shared-data/store.js'
 export default {
   props: {
-    gameData: {},
+    gameData: store.gameData,
   },
   components: {},
   data() {
@@ -19,11 +19,11 @@ export default {
 <template>
   <section>
     <div>
-      <p>{{ gameData.dayProgress }}</p>
-      <p>{{ gameData.triesLeft }}</p>
+      <p>Day: {{ gameData.dayProgress }}</p>
+      <p>Tries Left: {{ gameData.triesLeft }}</p>
     </div>
     <div>
-      <p>{{ gameData.totalPotionsMade }}</p>
+      <p>Potions Made: {{ gameData.totalPotionsMade }}</p>
     </div>
   </section>
 </template>
