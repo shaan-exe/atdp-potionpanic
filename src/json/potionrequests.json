@@ -7,13 +7,13 @@
   },
   {
     "name": "Elixir of Vitality",
-    "ingredients": ["Phoenix Feather", "Mandrake Root"],
+    "ingredients": ["Phoenix Feather", "Mandrake Root", "Dragon Scale"],
     "rarity": "rare",
     "description": "A potion that boosts vitality and energy, perfect for long study sessions."
   },
   {
     "name": "Resilience Brew",
-    "ingredients": ["Dragon Scale", "Phoenix Feather"],
+    "ingredients": ["Dragon Scale", "Phoenix Feather", "Mandrake Root"],
     "rarity": "legendary",
     "description": "A powerful potion that enhances physical resilience and strength."
   }

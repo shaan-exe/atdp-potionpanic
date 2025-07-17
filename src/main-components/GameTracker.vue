@@ -1,12 +1,12 @@
 <script>
 import store from '../shared-data/store.js'
 export default {
-  props: {
-    gameData: store.gameData,
-  },
+  props: {},
   components: {},
   data() {
-    return {}
+    return {
+      gameData: store.gameData,
+    }
   },
   methods: {
     // updateTracker()  Updates the visual tracker (day progress, current tries in the day + tries left, and other misc stats like total potions made, etc.)

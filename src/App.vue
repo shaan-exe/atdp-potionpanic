@@ -23,6 +23,7 @@ export default {
       gameData: store.gameData,
       requestKey: 0,
       feedbackPanelKey: 0,
+      gameTrackerKey: 0,
     }
   },
   methods: {
@@ -35,9 +36,6 @@ export default {
       } else {
         this.gameState = 'ongoing'
       }
-    },
-    handleRequestChange(newRequest) {
-      this.gameData.currentRequest = newRequest
     },
     handleDayChange() {
       this.gameData.dayProgress += 1
@@ -64,6 +62,10 @@ export default {
         this.feedbackPanelKey += 1
       }
     },
+    refreshGameTracker() {
+      console.log('Refreshing game tracker...')
+      this.gameTrackerKey += 1
+    },
   },
   computed: {
     //these will be "checks" of the current game state, like whether the player has won or lost, or if the game is still ongoing.
@@ -80,7 +82,7 @@ export default {
     will be rendered as well. // following the wireframe, the components will be rendered in the
     following order: // 1. GameTracker // 2. FeedbackPanel // 3. IngredientInventory // 4.
     RequestDisplay // 5. PotionMixer -->
-    <GameTracker :gameData="gameData"></GameTracker>
+    <GameTracker :key="gameTrackerKey" :gameData="gameData"></GameTracker>
     <FeedbackPanel
       :key="feedbackPanelKey"
       @next-feedback="nextFeedback"
@@ -88,8 +90,12 @@ export default {
       :feedback="gameData.currentFeedback"
     ></FeedbackPanel>
     <IngredientInventory :inventoryData="gameData.inventory"></IngredientInventory>
-    <RequestDisplay :key="requestKey" @update-request="handleRequestChange"></RequestDisplay>
-    <PotionMixer :request="gameData.currentRequest" :inventory="gameData.inventory"></PotionMixer>
+    <RequestDisplay :key="requestKey"></RequestDisplay>
+    <PotionMixer
+      @updateGameTracker="refreshGameTracker"
+      :request="gameData.currentRequest"
+      :inventory="gameData.inventory"
+    ></PotionMixer>
   </main>
 </template>
 

@@ -1,20 +1,24 @@
 <script>
 import MixerSlot from './sub-components/MixerSlot.vue'
-
+import store from '../shared-data/store.js'
 export default {
   components: {
     MixerSlot,
   },
   props: {
     inventory: Array,
-    request: {},
+    request: store.gameData.currentRequest, // Use the current request from the store
   },
   data() {
     return {
       selectedSlots: [null, null, null], // track 3 selected ingredients
+      gameData: store.gameData,
     }
   },
   methods: {
+    updateGameTrackerEmit() {
+      this.$emit('updateGameTracker')
+    },
     updateSlot(index, ingredient) {
       this.selectedSlots[index] = ingredient
     },
@@ -31,11 +35,20 @@ export default {
       const requestNames = this.request.ingredients.map((ing) => ing.name)
       if (selectedNames.length !== requestNames.length) {
         console.log('Potion mix is incorrect, try again.')
+        this.selectedSlots = [null, null, null]
+
+        store.gameData.triesLeft -= 1
+        this.updateGameTrackerEmit()
         return
       }
       const isMatch = selectedNames.every((name, index) => name === requestNames[index])
       if (isMatch) {
-        console.log('Potion mix is correct! 🎉')
+        console.log('Potion mix is correct!')
+        store.gameData.totalPotionsMade += 1
+        store.gameData.dayProgress += 1
+        store.gameData.triesLeft = 3
+        this.selectedSlots = [null, null, null]
+        this.updateGameTrackerEmit()
       } else {
         console.log('Potion mix is incorrect, try again.')
       }
