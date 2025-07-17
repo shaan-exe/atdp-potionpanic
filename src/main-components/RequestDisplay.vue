@@ -1,7 +1,6 @@
 <script>
 import Ingredients from '../json/ingredients.json'
 import PotionRequests from '../json/potionrequests.json'
-//import math
 
 export default {
   components: {},

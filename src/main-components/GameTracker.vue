@@ -1,4 +1,5 @@
 <script>
+import store from '../shared-data/store.js'
 export default {
   props: {
     gameData: {},

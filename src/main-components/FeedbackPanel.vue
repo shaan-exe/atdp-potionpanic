@@ -19,6 +19,8 @@ export default {
     <!--add improved structure for this component -->
     <p v-if="feedback">{{ feedback }}</p>
     <p v-else>Keep at it wizard! You've nearly earned your freedom...</p>
+
+    <button @click="$emit('next-feedback')">Next...</button>
   </section>
 </template>
 
