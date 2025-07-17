@@ -1,13 +1,31 @@
 <script>
+import store from '../shared-data/store.js'
+import { reactive } from 'vue'
+let storeData = reactive(store)
 export default {
   props: {
     feedback: String,
   },
   components: {},
   data() {
-    return {}
+    return {
+      gameData: storeData.gameData,
+    }
   },
-  methods: {},
+  methods: {
+    nextFeedback() {
+      this.gameData.feedbackIndex += 1
+      this.gameData.currentFeedback = store.gameData.feedbackArray[store.gameData.feedbackIndex]
+      
+    },
+    lastFeedback() {
+      if (this.gameData.feedbackIndex > 0) {
+        this.gameData.feedbackIndex -= 1
+        this.gameData.currentFeedback = store.gameData.feedbackArray[store.gameData.feedbackIndex]
+        
+      }
+    },
+  },
   computed: {},
   mounted() {},
 }
@@ -16,12 +34,12 @@ export default {
 <template>
   <!-- this component will serve to compute the nessecary feedback from the submission, getting the details of the users submission passed as props. -->
   <section>
-    <button @click="$emit('last-feedback')">Back...</button>
+    <button @click="lastFeedback">Back...</button>
     <!--add improved structure for this component -->
     <p v-if="feedback">{{ feedback }}</p>
     <p v-else>Keep at it wizard! You've nearly earned your freedom...</p>
 
-    <button @click="$emit('next-feedback')">Next...</button>
+    <button @click="nextFeedback">Next...</button>
   </section>
 </template>
 

@@ -1,6 +1,8 @@
 <script>
 import MixerSlot from './sub-components/MixerSlot.vue'
 import store from '../shared-data/store.js'
+import { reactive } from 'vue'
+let storeData = reactive(store)
 export default {
   components: {
     MixerSlot,
@@ -12,13 +14,11 @@ export default {
   data() {
     return {
       selectedSlots: [null, null, null], // track 3 selected ingredients
-      gameData: store.gameData,
+      gameData: storeData.gameData,
     }
   },
   methods: {
-    updateGameTrackerEmit() {
-      this.$emit('updateGameTracker')
-    },
+
     updateSlot(index, ingredient) {
       this.selectedSlots[index] = ingredient
     },
@@ -37,18 +37,21 @@ export default {
         console.log('Potion mix is incorrect, try again.')
         this.selectedSlots = [null, null, null]
 
-        store.gameData.triesLeft -= 1
-        this.updateGameTrackerEmit()
+        this.gameData.triesLeft -= 1
+       
         return
       }
       const isMatch = selectedNames.every((name, index) => name === requestNames[index])
       if (isMatch) {
         console.log('Potion mix is correct!')
-        store.gameData.totalPotionsMade += 1
-        store.gameData.dayProgress += 1
-        store.gameData.triesLeft = 3
+        this.gameData.totalPotionsMade += 1
+        this.gameData.dayProgress += 1
+        this.gameData.triesLeft = 3
         this.selectedSlots = [null, null, null]
-        this.updateGameTrackerEmit()
+  
+        this.gameData.currentRequest = {}
+        this.$emit('newRequest')
+        
       } else {
         console.log('Potion mix is incorrect, try again.')
       }
