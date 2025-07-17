@@ -51,6 +51,7 @@ export default {
         totalPotionsMade: 0,
         gameState: 'ongoing',
       },
+      requestKey: 0,
     }
   },
   methods: {
@@ -66,6 +67,13 @@ export default {
     },
     handleRequestChange(newRequest) {
       this.gameData.currentRequest = newRequest
+    },
+    handleDayChange() {
+      this.gameData.dayProgress += 1
+      this.gameData.triesLeft = 3
+      this.gameData.feedback = 'Ah, a new day! Time to brew some potions!'
+      this.gameData.currentRequest = {} // reset current request
+      this.requestKey += 1
     },
   },
   computed: {
@@ -86,7 +94,7 @@ export default {
     <GameTracker :gameData="gameData"></GameTracker>
     <FeedbackPanel :feedback="gameData.feedback"></FeedbackPanel>
     <IngredientInventory :inventoryData="gameData.inventory"></IngredientInventory>
-    <RequestDisplay @update-request="handleRequestChange"></RequestDisplay>
+    <RequestDisplay :key="requestKey" @update-request="handleRequestChange"></RequestDisplay>
     <PotionMixer :request="gameData.currentRequest" :inventory="gameData.inventory"></PotionMixer>
   </main>
 </template>

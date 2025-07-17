@@ -19,19 +19,25 @@ export default {
       this.selectedSlots[index] = ingredient
     },
     submitMix() {
-      if (this.selectedSlots.some((ing) => !ing || !ing.name)) {
+      if (!this.request || !Array.isArray(this.request.ingredients)) {
+        console.log('No valid recipe request available.')
         return
       }
-      const selectedNames = this.selectedSlots.map((ing) => ing.name).sort()
-      console.log(this.request)
-      const requestNames = this.request.ingredients.map((ing) => ing.name).sort()
-
-      const match = JSON.stringify(selectedNames) === JSON.stringify(requestNames)
-
-      if (match) {
-        console.log('Potion mix matches the request!')
+      if (this.selectedSlots.some((ing) => !ing || !ing.name)) {
+        console.log('Please select an ingredient for every slot!')
+        return
+      }
+      const selectedNames = this.selectedSlots.map((ing) => ing.name)
+      const requestNames = this.request.ingredients.map((ing) => ing.name)
+      if (selectedNames.length !== requestNames.length) {
+        console.log('Potion mix is incorrect, try again.')
+        return
+      }
+      const isMatch = selectedNames.every((name, index) => name === requestNames[index])
+      if (isMatch) {
+        console.log('Potion mix is correct! 🎉')
       } else {
-        console.log('Potion mix does not match the request.')
+        console.log('Potion mix is incorrect, try again.')
       }
     },
   },
