@@ -20,7 +20,15 @@ export default {
       // the major game state variables will be stored here, like the current potion request, the player's inventory, and the current mixer state.
       gameData: {
         currentRequest: null,
-        inventory: [],
+        inventory: [
+          {
+            name: 'Mandrake Root',
+            type: 'herb',
+            description:
+              'A root known for its magical properties, often used in potions to enhance learning and memory.',
+            rarity: 'common',
+          },
+        ],
         mixerState: [],
         feedback: '',
         dayProgress: 0,
@@ -37,7 +45,12 @@ export default {
         this.gameState = 'lost'
       } else if (this.totalPotionsMade >= 10) {
         this.gameState = 'won'
+      } else {
+        this.gameState = 'ongoing'
       }
+    },
+    handleRequestChange(newRequest) {
+      this.gameData.currentRequest = newRequest
     },
   },
   computed: {
@@ -58,8 +71,8 @@ export default {
     <GameTracker :gameData="gameData"></GameTracker>
     <FeedbackPanel :feedback="gameData.feedback"></FeedbackPanel>
     <IngredientInventory :inventoryData="gameData.inventory"></IngredientInventory>
-    <RequestDisplay></RequestDisplay>
-    hihihi
+    <RequestDisplay @update-request="handleRequestChange"></RequestDisplay>
+    <PotionMixer :inventory="gameData.inventory"></PotionMixer>
   </main>
 </template>
 

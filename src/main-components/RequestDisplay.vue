@@ -25,6 +25,7 @@ export default {
         description: request.description,
         ingredients: this.Ingredients.filter((ingredient) => ingredients.includes(ingredient.name)),
       }
+      this.$emit('update-request', this.currentRequest)
     },
   },
   computed: {
