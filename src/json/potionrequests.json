@@ -6,7 +6,13 @@
         "name": "Potion of Learning",
         "ingredients": ["Mandrake Root", "Phoenix Feather", "Dragon Scale"],
         "rarity": "common",
-        "description": "Your very first potion, made with the help of your mentor. It enhances learning and memory."
+        "description": "Enhances learning and memory."
+      },
+      {
+        "name": "Potion of Focus",
+        "ingredients": ["Mandrake Root", "Phoenix Feather"],
+        "rarity": "common",
+        "description": "Sharpens concentration for study."
       }
     ]
   },
@@ -17,7 +23,13 @@
         "name": "Elixir of Vitality",
         "ingredients": ["Potion of Learning", "Mandrake Root", "Phoenix Feather"],
         "rarity": "rare",
-        "description": "A potion that boosts vitality and energy, using the Potion of Learning as a base."
+        "description": "Boosts vitality and energy."
+      },
+      {
+        "name": "Potion of Recall",
+        "ingredients": ["Potion of Focus", "Dragon Scale", "Phoenix Feather"],
+        "rarity": "uncommon",
+        "description": "Improves memory recall."
       }
     ]
   },
@@ -28,7 +40,13 @@
         "name": "Resilience Brew",
         "ingredients": ["Elixir of Vitality", "Dragon Scale", "Mandrake Root"],
         "rarity": "legendary",
-        "description": "A powerful potion that enhances physical resilience, building on the Elixir of Vitality."
+        "description": "Enhances physical resilience."
+      },
+      {
+        "name": "Energy Draught",
+        "ingredients": ["Potion of Recall", "Mandrake Root", "Phoenix Feather"],
+        "rarity": "rare",
+        "description": "Restores energy after a long day."
       }
     ]
   },
@@ -39,7 +57,13 @@
         "name": "Clarity Draught",
         "ingredients": ["Resilience Brew", "Phoenix Feather", "Mandrake Root"],
         "rarity": "uncommon",
-        "description": "A potion that clears the mind, using Resilience Brew as a key ingredient."
+        "description": "Clears the mind for problem solving."
+      },
+      {
+        "name": "Fortitude Elixir",
+        "ingredients": ["Energy Draught", "Dragon Scale", "Potion of Focus"],
+        "rarity": "rare",
+        "description": "Strengthens resolve and courage."
       }
     ]
   },
@@ -50,7 +74,13 @@
         "name": "Harmony Tonic",
         "ingredients": ["Clarity Draught", "Dragon Scale", "Potion of Learning"],
         "rarity": "rare",
-        "description": "Restores emotional balance and calms nerves, blending Clarity Draught and Potion of Learning."
+        "description": "Calms nerves before a challenge."
+      },
+      {
+        "name": "Insight Brew",
+        "ingredients": ["Fortitude Elixir", "Mandrake Root", "Potion of Recall"],
+        "rarity": "uncommon",
+        "description": "Grants insight into difficult problems."
       }
     ]
   },
@@ -61,7 +91,13 @@
         "name": "Fortune Elixir",
         "ingredients": ["Harmony Tonic", "Elixir of Vitality", "Phoenix Feather"],
         "rarity": "legendary",
-        "description": "Brings good luck and fortune, using Harmony Tonic and Elixir of Vitality."
+        "description": "Brings good luck and fortune."
+      },
+      {
+        "name": "Serenity Potion",
+        "ingredients": ["Insight Brew", "Clarity Draught", "Dragon Scale"],
+        "rarity": "rare",
+        "description": "Brings peace and serenity."
       }
     ]
   },
@@ -72,7 +108,13 @@
         "name": "Wisdom Serum",
         "ingredients": ["Fortune Elixir", "Resilience Brew", "Mandrake Root"],
         "rarity": "rare",
-        "description": "Unlocks ancient knowledge, combining Fortune Elixir and Resilience Brew."
+        "description": "Unlocks ancient knowledge."
+      },
+      {
+        "name": "Radiance Draught",
+        "ingredients": ["Serenity Potion", "Harmony Tonic", "Phoenix Feather"],
+        "rarity": "legendary",
+        "description": "Radiates magical energy."
       }
     ]
   },
@@ -83,7 +125,13 @@
         "name": "Starlight Infusion",
         "ingredients": ["Wisdom Serum", "Harmony Tonic", "Dragon Scale"],
         "rarity": "legendary",
-        "description": "A magical potion that illuminates the darkest paths, using Wisdom Serum and Harmony Tonic."
+        "description": "Illuminates the darkest paths."
+      },
+      {
+        "name": "Eclipse Elixir",
+        "ingredients": ["Radiance Draught", "Fortune Elixir", "Mandrake Root"],
+        "rarity": "legendary",
+        "description": "Grants mastery over light and shadow."
       }
     ]
   }
