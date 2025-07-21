@@ -70,7 +70,8 @@ export default {
       let curRequest = {
         name: request.name,
         description: request.description,
-        ingredients: this.Ingredients.filter((ingredient) => ingredients.includes(ingredient.name)),
+        ingredients: request.ingredients, 
+
       }
       this.gameData.currentRequest = curRequest
       console.log(this.gameData.currentRequest)

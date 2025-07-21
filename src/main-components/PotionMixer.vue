@@ -32,28 +32,34 @@ export default {
         return
       }
       const selectedNames = this.selectedSlots.map((ing) => ing.name)
-      const requestNames = this.request.ingredients.map((ing) => ing.name)
-      if (selectedNames.length !== requestNames.length) {
-        console.log('Potion mix is incorrect, try again.')
-        this.selectedSlots = [null, null, null]
-
-        this.gameData.triesLeft -= 1
-       
-        return
-      }
-      const isMatch = selectedNames.every((name, index) => name === requestNames[index])
+      const requestNames = Array.isArray(this.request.ingredients)
+        ? this.request.ingredients
+        : []
+      const isMatch =
+        selectedNames.length === requestNames.length &&
+        selectedNames.every((name) => requestNames.includes(name)) &&
+        requestNames.every((name) => selectedNames.includes(name))
       if (isMatch) {
         console.log('Potion mix is correct!')
         this.gameData.totalPotionsMade += 1
         this.gameData.dayProgress += 1
         this.gameData.triesLeft = 3
         this.selectedSlots = [null, null, null]
-  
+
+   
+        this.gameData.inventory.push({
+          name: this.request.name,
+          type: 'potion',
+          description: this.request.description,
+
+
+        })
+
         this.gameData.currentRequest = {}
         this.$emit('newRequest')
-        
       } else {
         console.log('Potion mix is incorrect, try again.')
+        this.gameData.triesLeft -= 1
       }
     },
   },
