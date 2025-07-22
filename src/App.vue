@@ -27,7 +27,7 @@ export default {
       gameData: storeData.gameData,
       PotionRequests: PotionRequests,
       Ingredients: Ingredients,
- 
+
     }
   },
   methods: {
@@ -43,22 +43,22 @@ export default {
     },
     handleDayChange() {
       this.gameData.dayProgress += 1
-      this.gameData.triesLeft = 8 
+      this.gameData.triesLeft = 8
       this.gameData.feedback = 'Ah, a new day! Time to brew some potions!'
       this.gameData.currentRequest = {} // reset current request
-    
+
     },
     gameInit() {
       this.gameData.dayProgress = 0
-      this.gameData.triesLeft = 8 
+      this.gameData.triesLeft = 8
       this.gameData.totalPotionsMade = 0
       this.gameData.currentFeedback = store.gameData.feedbackArray[store.gameData.feedbackIndex]
     },
-    
-    
+
+
     newRequest() {
       this.generateRequest()
-      
+
     },
     generateRequest() {
 
@@ -69,7 +69,7 @@ export default {
         this.gameData.currentRequest = {}
         return
       }
-    
+
       const randomIndex = Math.floor(Math.random() * dayObj.requests.length)
       const request = dayObj.requests[randomIndex]
       this.gameData.currentRequest = {
@@ -101,7 +101,7 @@ export default {
 <template>
   <main>
     <a href="/src/json/potionrequests.json">Answers (Cheats for alpha testing...)</a>
-    <div class="top-row">
+    <div class="top-row"> <!--container for data- each component apart of this div is marked with a heading, see notes in component for more info-->
       <GameTracker :gameData="gameData" />
       <FeedbackPanel :feedback="gameData.currentFeedback" />
     </div>

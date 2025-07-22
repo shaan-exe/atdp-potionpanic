@@ -113,7 +113,7 @@ li {
 
 select {
   background: #23232b;
-  color: #c7b77f;
+  color: #c7b77f; /* TODO: Improve Contrast */
   border: 1px solid #3a2c1a;
   border-radius: 6px;
   padding: 8px 12px;

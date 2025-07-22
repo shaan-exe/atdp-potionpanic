@@ -25,13 +25,14 @@ export default {
     },
     togglePanel() {
       this.open = !this.open
-      
+
     }
   }
 }
 </script>
 
 <template>
+  <!--landmark block aside-->
   <aside :class="['feedback-aside', { open }]">
     <button
       class="toggle-btn"

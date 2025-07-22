@@ -37,6 +37,7 @@ export default {
 
 <template>
   <div class="mixer-slot">
+    <!--drop down to select potions- TODO: ensure they work on various types of device use-->
     <select @change="handleSelection" :value="selectedIngredient?.name || ''">
       <option disabled value="">Select Ingredient</option>
       <option

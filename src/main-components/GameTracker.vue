@@ -9,7 +9,7 @@ export default {
     }
   },
   methods: {
-    // updateTracker()  Updates the visual tracker (day progress, current tries in the day + tries left, and other misc stats like total potions made, etc.)
+
   },
   computed: {},
   mounted() {},
@@ -19,6 +19,7 @@ export default {
 <template>
   <section>
     <div>
+      <!-- TODO: add stats heading to signify section, maybe remove div to be more clear???-->
       <p><ins>Day:</ins> {{ gameData.dayProgress }}</p>
       <p><ins>Tries Left:</ins> {{ gameData.triesLeft }}</p>
     </div>

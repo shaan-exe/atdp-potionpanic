@@ -9,7 +9,7 @@ export default {
   components: { MixerSlot },
   props: {
     inventory: Array,
-    request: Object, 
+    request: Object,
   },
   data() {
     return {
@@ -42,14 +42,14 @@ export default {
         )
       })
 
-    
+
       const orderMatch = possiblePotions.find(potion => {
         const req = potion.ingredients
         return (
           selectedNames.length === req.length &&
           selectedNames.every(name => req.includes(name)) &&
           req.every(name => selectedNames.includes(name)) &&
-          !selectedNames.every((name, idx) => name === req[idx]) 
+          !selectedNames.every((name, idx) => name === req[idx])
         )
       })
       if (orderMatch) {
@@ -62,7 +62,7 @@ export default {
         return
       }
 
-     
+
       if (!match) {
         let feedbackMsg = ''
         if (possiblePotions.length > 0) {
@@ -77,8 +77,8 @@ export default {
         this.gameData.triesLeft -= 1
         this.clearMixer()
         return
-      } 
-      
+      }
+
       let canMake = true
       let used = {}
       selectedNames.forEach(name => {
@@ -92,7 +92,7 @@ export default {
       }
       if (!canMake) {
         console.log('Not enough quantity for one or more ingredients!')
-        this.clearMixer() 
+        this.clearMixer()
         return
       }
       for (const name in used) {
@@ -145,6 +145,7 @@ export default {
         :usedIngredients="usedIngredientNames"
         @update:ingredient="(ingredient) => updateSlot(index, ingredient)"
       />
+      <!--interactive buttons- able to be used on mobile and PC- and also with enter + keyboard-->
       <button @click="submitMix">Submit Potion Mix</button>
       <button @click="clearMixer" type="button">Clear Mixer</button>
     </div>

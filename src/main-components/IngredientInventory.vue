@@ -26,6 +26,7 @@ export default {
     <div>
       <h2>Ingredient Inventory</h2>
       <ul>
+        <!--list items marked with P tag- section within main-->
         <IngredientItem v-for="item in inventoryData" :key="item.name" :item="item"></IngredientItem>
       </ul>
     </div>
