@@ -1,102 +1,90 @@
 <script>
 import MixerSlot from './sub-components/MixerSlot.vue'
 import store from '../shared-data/store.js'
+import PotionRequests from '../json/potionrequests.json'
 import { reactive } from 'vue'
 let storeData = reactive(store)
+
 export default {
-  components: {
-    MixerSlot,
-  },
+  components: { MixerSlot },
   props: {
     inventory: Array,
-    request: store.gameData.currentRequest, // Use the current request from the store
   },
   data() {
     return {
-      selectedSlots: [null, null, null], // track 3 selected ingredients
+      selectedSlots: [null, null, null],
       gameData: storeData.gameData,
+      allPotions: PotionRequests.flatMap(day => day.requests),
     }
   },
   methods: {
-
     updateSlot(index, ingredient) {
       this.selectedSlots[index] = ingredient
     },
     submitMix() {
-      if (!this.request || !Array.isArray(this.request.ingredients)) {
-        console.log('No valid recipe request available.')
-        return
-      }
       const selectedNames = this.selectedSlots.filter(ing => ing && ing.name).map(ing => ing.name)
-      const requestNames = Array.isArray(this.request.ingredients)
-        ? this.request.ingredients
-        : []
-      if (selectedNames.length !== requestNames.length) {
-        console.log('Please select the correct number of ingredients for this potion!')
+      if (selectedNames.length === 0) {
+        console.log('Select at least one ingredient!')
         return
       }
-      const isMatch =
-        selectedNames.length === requestNames.length &&
-        selectedNames.every((name) => requestNames.includes(name)) &&
-        requestNames.every((name) => selectedNames.includes(name))
-      if (isMatch) {
-       
-        let canMake = true
-        let used = {}
-        selectedNames.forEach(name => {
-          used[name] = (used[name] || 0) + 1
-        })
-        for (const name in used) {
-          const invItem = this.gameData.inventory.find(item => item.name === name)
-          if (!invItem || invItem.quantity < used[name]) {
-            canMake = false
-          }
-        }
-        if (!canMake) {
-          console.log('Not enough quantity for one or more ingredients!')
-          return
-        }
-
-       
-        for (const name in used) {
-          const invItem = this.gameData.inventory.find(item => item.name === name)
-          if (invItem) invItem.quantity -= used[name]
-        }
-
-        this.gameData.totalPotionsMade += 1
-        this.gameData.dayProgress += 1
-        this.gameData.triesLeft = 3
-        this.selectedSlots = [null, null, null]
-
-       
-        let existingPotion = this.gameData.inventory.find(item => item.name === this.request.name)
-        if (existingPotion) {
-          existingPotion.quantity += 1
-        } else {
-          this.gameData.inventory.push({
-            name: this.request.name,
-            type: 'potion',
-            description: this.request.description,
-            rarity: this.request.rarity,
-            quantity: 1
-          })
-        }
-
-        this.gameData.currentRequest = {}
-        this.$emit('newRequest')
-      } else {
-        console.log('Potion mix is incorrect, try again.')
+      
+      const match = this.allPotions.find(potion => {
+        const req = potion.ingredients
+        return (
+          selectedNames.length === req.length &&
+          selectedNames.every(name => req.includes(name)) &&
+          req.every(name => selectedNames.includes(name))
+        )
+      })
+      if (!match) {
+        console.log('No matching potion recipe found!')
         this.gameData.triesLeft -= 1
+        return
+      } 
+      
+      let canMake = true
+      let used = {}
+      selectedNames.forEach(name => {
+        used[name] = (used[name] || 0) + 1
+      })
+      for (const name in used) {
+        const invItem = this.gameData.inventory.find(item => item.name === name)
+        if (!invItem || invItem.quantity < used[name]) {
+          canMake = false
+        }
       }
+      if (!canMake) {
+        console.log('Not enough quantity for one or more ingredients!')
+        return
+      }
+      
+      for (const name in used) {
+        const invItem = this.gameData.inventory.find(item => item.name === name)
+        if (invItem) invItem.quantity -= used[name]
+      }
+     
+      let existingPotion = this.gameData.inventory.find(item => item.name === match.name)
+      if (existingPotion) {
+        existingPotion.quantity += 1
+      } else {
+        this.gameData.inventory.push({
+          name: match.name,
+          type: 'potion',
+          description: match.description,
+          rarity: match.rarity,
+          quantity: 1
+        })
+      }
+      this.gameData.totalPotionsMade += 1
+      this.selectedSlots = [null, null, null]
+      console.log('Potion crafted:', match.name)
     },
   },
-
   computed: {
     usedIngredientNames() {
       return this.selectedSlots.filter((item) => item !== null).map((item) => item.name)
     },
   },
-  mounted() {},
 }
 </script>
 
@@ -112,8 +100,8 @@ export default {
         :usedIngredients="usedIngredientNames"
         @update:ingredient="(ingredient) => updateSlot(index, ingredient)"
       />
+      <button @click="submitMix">Submit Potion Mix</button>
     </div>
-    <button @click="submitMix">Submit Potion Mix</button>
   </section>
 </template>
 
