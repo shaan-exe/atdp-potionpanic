@@ -40,20 +40,47 @@ export default {
         selectedNames.every((name) => requestNames.includes(name)) &&
         requestNames.every((name) => selectedNames.includes(name))
       if (isMatch) {
-        console.log('Potion mix is correct!')
+       
+        let canMake = true
+        let used = {}
+        selectedNames.forEach(name => {
+          used[name] = (used[name] || 0) + 1
+        })
+        for (const name in used) {
+          const invItem = this.gameData.inventory.find(item => item.name === name)
+          if (!invItem || invItem.quantity < used[name]) {
+            canMake = false
+          }
+        }
+        if (!canMake) {
+          console.log('Not enough quantity for one or more ingredients!')
+          return
+        }
+
+       
+        for (const name in used) {
+          const invItem = this.gameData.inventory.find(item => item.name === name)
+          if (invItem) invItem.quantity -= used[name]
+        }
+
         this.gameData.totalPotionsMade += 1
         this.gameData.dayProgress += 1
         this.gameData.triesLeft = 3
         this.selectedSlots = [null, null, null]
 
-   
-        this.gameData.inventory.push({
-          name: this.request.name,
-          type: 'potion',
-          description: this.request.description,
-
-
-        })
+       
+        let existingPotion = this.gameData.inventory.find(item => item.name === this.request.name)
+        if (existingPotion) {
+          existingPotion.quantity += 1
+        } else {
+          this.gameData.inventory.push({
+            name: this.request.name,
+            type: 'potion',
+            description: this.request.description,
+            rarity: this.request.rarity,
+            quantity: 1
+          })
+        }
 
         this.gameData.currentRequest = {}
         this.$emit('newRequest')
