@@ -9,6 +9,7 @@ export default {
   components: { MixerSlot },
   props: {
     inventory: Array,
+    request: Object, 
   },
   data() {
     return {
@@ -27,7 +28,6 @@ export default {
         console.log('Select at least one ingredient!')
         return
       }
-      
       const match = this.allPotions.find(potion => {
         const req = potion.ingredients
         return (
@@ -78,6 +78,15 @@ export default {
       this.gameData.totalPotionsMade += 1
       this.selectedSlots = [null, null, null]
       console.log('Potion crafted:', match.name)
+
+     
+      if (
+        this.request &&
+        this.request.name &&
+        match.name === this.request.name
+      ) {
+        this.$emit('newRequest')
+      }
     },
   },
   computed: {
