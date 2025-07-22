@@ -39,7 +39,7 @@ export default {
     feedbackIndex: 0,
     currentFeedback: '',
     dayProgress: 0,
-    triesLeft: 3,
+    triesLeft: 8,
     totalPotionsMade: 0,
     gameState: 'ongoing',
   },

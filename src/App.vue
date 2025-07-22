@@ -43,14 +43,14 @@ export default {
     },
     handleDayChange() {
       this.gameData.dayProgress += 1
-      this.gameData.triesLeft = 3
+      this.gameData.triesLeft = 8 
       this.gameData.feedback = 'Ah, a new day! Time to brew some potions!'
       this.gameData.currentRequest = {} // reset current request
     
     },
     gameInit() {
       this.gameData.dayProgress = 0
-      this.gameData.triesLeft = 3
+      this.gameData.triesLeft = 8 
       this.gameData.totalPotionsMade = 0
       this.gameData.currentFeedback = store.gameData.feedbackArray[store.gameData.feedbackIndex]
     },
