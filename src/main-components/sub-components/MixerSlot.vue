@@ -43,9 +43,9 @@ export default {
         v-for="item in inventory"
         :key="item.name"
         :value="item.name"
-        :disabled="usedIngredients.includes(item.name) && item.name !== selectedIngredient?.name"
+        :disabled="(usedIngredients.includes(item.name) && item.name !== selectedIngredient?.name) || item.quantity === 0"
       >
-        {{ item.name }}
+        {{ item.name }} <span v-if="item.quantity !== undefined">({{ item.quantity }})</span>
       </option>
     </select>
 
