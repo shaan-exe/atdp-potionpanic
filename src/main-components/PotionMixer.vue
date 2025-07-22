@@ -28,10 +28,12 @@ export default {
     submitMix() {
       const selectedNames = this.selectedSlots.filter(ing => ing && ing.name).map(ing => ing.name)
       if (selectedNames.length === 0) {
-        console.log('Select at least one ingredient!')
+        this.$emit('feedback', 'Select at least one ingredient!')
         return
       }
-      const match = this.allPotions.find(potion => {
+      
+      const possiblePotions = this.allPotions.filter(potion => potion.ingredients.length === selectedNames.length)
+      let match = possiblePotions.find(potion => {
         const req = potion.ingredients
         return (
           selectedNames.length === req.length &&
@@ -40,9 +42,35 @@ export default {
         )
       })
       if (!match) {
-        console.log('No matching potion recipe found!')
+        const orderMatch = possiblePotions.find(potion => {
+          const req = potion.ingredients
+          return (
+            selectedNames.length === req.length &&
+            selectedNames.every(name => req.includes(name)) &&
+            req.every(name => selectedNames.includes(name)) &&
+            !selectedNames.every((name, idx) => name === req[idx]) // same ingredients, wrong order
+          )
+        })
+        if (orderMatch) {
+          this.$emit('feedback', 'You have all the right ingredients, but the order is wrong!')
+          this.gameData.triesLeft -= 1
+          this.clearMixer()
+          return
+        }
+
+        let feedbackMsg = ''
+        if (possiblePotions.length > 0) {
+         
+          const recipe = (this.request && this.request.ingredients) ? this.request.ingredients : possiblePotions[0].ingredients
+          const correct = selectedNames.filter(name => recipe.includes(name))
+          const incorrect = selectedNames.filter(name => !recipe.includes(name))
+          feedbackMsg = `Incorrect mix. ${correct.length > 0 ? 'Correct ingredient(s): ' + correct.join(', ') + '. ' : ''}${incorrect.length > 0 ? 'Not needed: ' + incorrect.join(', ') + '.' : ''}`
+        } else {
+          feedbackMsg = 'No potion uses this number of ingredients.'
+        }
+        this.$emit('feedback', feedbackMsg)
         this.gameData.triesLeft -= 1
-        this.clearMixer() 
+        this.clearMixer()
         return
       } 
       

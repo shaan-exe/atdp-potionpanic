@@ -95,20 +95,16 @@ export default {
 
 <template>
   <main>
-    <!-- // each of the main components will be rendered here- and in each of those the subcomponents
-    will be rendered as well. // following the wireframe, the components will be rendered in the
-    following order: // 1. GameTracker // 2. FeedbackPanel // 3. IngredientInventory // 4.
-    RequestDisplay // 5. PotionMixer -->
     <GameTracker :key="gameTrackerKey" :gameData="gameData"></GameTracker>
     <FeedbackPanel
       :key="feedbackPanelKey"
-     
       :feedback="gameData.currentFeedback"
     ></FeedbackPanel>
     <IngredientInventory :inventoryData="gameData.inventory"></IngredientInventory>
     <RequestDisplay :key="requestKey"></RequestDisplay>
-    <PotionMixer @newRequest="newRequest"
-      
+    <PotionMixer
+      @newRequest="newRequest"
+      @feedback="gameData.currentFeedback = $event"
       :request="gameData.currentRequest"
       :inventory="gameData.inventory"
     ></PotionMixer>
