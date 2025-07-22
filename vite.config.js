@@ -6,9 +6,9 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        entryFileNames: 'assets/index-6x1meezR.js',
-        chunkFileNames: 'assets/[name].js',
-        assetFileNames: 'assets/[name][extname]',
+        entryFileNames: 'shaandabomb/projects/p2/assets/index-6x1meezR.js',
+        chunkFileNames: 'shaandabomb/projects/p2/assets/[name].js',
+        assetFileNames: 'shaandabomb/projects/p2/assets/[name][extname]',
       }
     }
   }
