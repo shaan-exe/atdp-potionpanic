@@ -31,10 +31,14 @@ export default {
         console.log('Please select an ingredient for every slot!')
         return
       }
-      const selectedNames = this.selectedSlots.map((ing) => ing.name)
+      const selectedNames = this.selectedSlots.filter(ing => ing && ing.name).map(ing => ing.name)
       const requestNames = Array.isArray(this.request.ingredients)
         ? this.request.ingredients
         : []
+      if (selectedNames.length !== requestNames.length) {
+        console.log('Please select the correct number of ingredients for this potion!')
+        return
+      }
       const isMatch =
         selectedNames.length === requestNames.length &&
         selectedNames.every((name) => requestNames.includes(name)) &&
