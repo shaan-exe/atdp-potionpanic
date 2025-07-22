@@ -116,4 +116,8 @@ export default {
   </main>
 </template>
 
-<style scoped></style>
+<style scoped>
+*{
+  text-align: center;
+}
+</style>
