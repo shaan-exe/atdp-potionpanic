@@ -3,7 +3,7 @@ name: Build and Deploy Vue App
 on:
   push:
     branches:
-      - main  # or your default branch
+      - main  
 
 jobs:
   build-and-deploy:
@@ -16,7 +16,7 @@ jobs:
     - name: Setup Node
       uses: actions/setup-node@v3
       with:
-        node-version: '24.4.0'  
+        node-version: '24.4.0'
 
     - name: Install Dependencies
       run: npm install
@@ -25,11 +25,11 @@ jobs:
       run: npm run build
 
     - name: Upload via SFTP
-      uses: pressidium/lftp-mirror-action@v1.2.1
+      uses: pressidium/lftp-mirror-action@v1
       with:
         host: ${{ secrets.SFTP_HOST }}
         user: ${{ secrets.SFTP_USER }}
         pass: ${{ secrets.SFTP_PASS }}
         localDir: './dist'
-        remoteDir: '/shaandabomb/projects/p2' 
+        remoteDir: '/shaandabomb/projects/p2'
         options: '--reverse --delete --verbose'
