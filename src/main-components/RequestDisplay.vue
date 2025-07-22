@@ -20,7 +20,7 @@ export default {
 
 <template>
   <section>
-    <h2>Current Potion Request</h2>
+    <h2>Current Potion Request: </h2>
     <div v-if="gameData">
       <h3>{{ gameData.currentRequest.name }}</h3>
 
