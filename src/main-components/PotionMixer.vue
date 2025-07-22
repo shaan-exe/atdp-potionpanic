@@ -49,7 +49,7 @@ export default {
           selectedNames.length === req.length &&
           selectedNames.every(name => req.includes(name)) &&
           req.every(name => selectedNames.includes(name)) &&
-          !selectedNames.every((name, idx) => name === req[idx]) // same ingredients, wrong order
+          !selectedNames.every((name, idx) => name === req[idx]) 
         )
       })
       if (orderMatch) {
@@ -113,7 +113,7 @@ export default {
       }
       this.gameData.totalPotionsMade += 1
       this.clearMixer()
-      console.log('Potion crafted:', match.name)
+      this.$emit('feedback', `Successfully crafted ${match.name}! You used: ${selectedNames.join(', ')}`)
 
       if (
         this.request &&
