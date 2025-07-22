@@ -22,6 +22,9 @@ export default {
     updateSlot(index, ingredient) {
       this.selectedSlots[index] = ingredient
     },
+    clearMixer() {
+      this.selectedSlots = [null, null, null]
+    },
     submitMix() {
       const selectedNames = this.selectedSlots.filter(ing => ing && ing.name).map(ing => ing.name)
       if (selectedNames.length === 0) {
@@ -39,6 +42,7 @@ export default {
       if (!match) {
         console.log('No matching potion recipe found!')
         this.gameData.triesLeft -= 1
+        this.clearMixer() 
         return
       } 
       
@@ -55,14 +59,13 @@ export default {
       }
       if (!canMake) {
         console.log('Not enough quantity for one or more ingredients!')
+        this.clearMixer() 
         return
       }
-      
       for (const name in used) {
         const invItem = this.gameData.inventory.find(item => item.name === name)
         if (invItem) invItem.quantity -= used[name]
       }
-     
       let existingPotion = this.gameData.inventory.find(item => item.name === match.name)
       if (existingPotion) {
         existingPotion.quantity += 1
@@ -76,17 +79,16 @@ export default {
         })
       }
       this.gameData.totalPotionsMade += 1
-      this.selectedSlots = [null, null, null]
+      this.clearMixer()
       console.log('Potion crafted:', match.name)
 
-     
       if (
         this.request &&
         this.request.name &&
         match.name === this.request.name
       ) {
-        this.gameData.dayProgress += 1; // <-- increment the day!
-        this.$emit('newRequest');
+        this.gameData.dayProgress += 1
+        this.$emit('newRequest')
       }
     },
   },
@@ -111,6 +113,7 @@ export default {
         @update:ingredient="(ingredient) => updateSlot(index, ingredient)"
       />
       <button @click="submitMix">Submit Potion Mix</button>
+      <button @click="clearMixer" type="button">Clear Mixer</button>
     </div>
   </section>
 </template>
