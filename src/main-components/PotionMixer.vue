@@ -27,10 +27,6 @@ export default {
         console.log('No valid recipe request available.')
         return
       }
-      if (this.selectedSlots.some((ing) => !ing || !ing.name)) {
-        console.log('Please select an ingredient for every slot!')
-        return
-      }
       const selectedNames = this.selectedSlots.filter(ing => ing && ing.name).map(ing => ing.name)
       const requestNames = Array.isArray(this.request.ingredients)
         ? this.request.ingredients
