@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&family=Spectral:wght@400;700&display=swap');
+
+body {
+  background: linear-gradient(135deg, #18181b 0%, #23232b 100%);
+  color: #e0e0e0;
+  font-family: 'Spectral', serif;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  letter-spacing: 0.03em;
+}
+
+main {
+  background: rgba(30, 30, 38, 0.95);
+  border-radius: 18px;
+  box-shadow: 0 0 40px 10px #0a0a0f, 0 2px 8px #23232b;
+  padding: 32px 40px;
+  margin: 40px auto;
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.top-row {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+  width: 100%;
+  gap: 0;
+  background: rgba(24, 24, 32, 0.98);
+  border-radius: 14px;
+  box-shadow: 0 0 16px 2px #18181b;
+  padding: 0 18px;
+  min-height: 80px;
+  margin-bottom: 18px;
+}
+
+.top-row > * {
+  flex: 1 1 0;
+  min-width: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  padding: 0 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+h1, h2, h3 {
+  font-family: 'UnifrakturCook', cursive;
+  color: #c7b77f;
+  text-shadow: 0 2px 8px #23232b;
+  margin-bottom: 12px;
+  letter-spacing: 0.07em;
+}
+
+h2 {
+  font-size: 2.2rem;
+}
+
+h3 {
+  font-size: 1.4rem;
+}
+
+section {
+  background: rgba(24, 24, 32, 0.85);
+  border-radius: 12px;
+  box-shadow: 0 0 12px 2px #18181b;
+  padding: 18px 24px;
+  margin-bottom: 18px;
+  width: 100%;
+}
+
+button {
+  background: linear-gradient(90deg, #3a2c1a 0%, #23232b 100%);
+  color: #e0e0e0;
+  font-family: 'Spectral', serif;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 22px;
+  margin: 8px 6px;
+  box-shadow: 0 2px 8px #23232b;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.1s;
+}
+
+button:hover {
+  background: linear-gradient(90deg, #c7b77f 0%, #3a2c1a 100%);
+  color: #23232b;
+  transform: scale(1.05);
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  background: rgba(44, 44, 54, 0.7);
+  border-radius: 6px;
+  margin: 6px 0;
+  padding: 8px 14px;
+  font-size: 1.08rem;
+  color: #e0e0e0;
+  box-shadow: 0 1px 4px #23232b;
+}
+
+select {
+  background: #23232b;
+  color: #c7b77f;
+  border: 1px solid #3a2c1a;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 1rem;
+  margin: 8px 0;
+  font-family: 'Spectral', serif;
+}
+
+input, textarea {
+  background: #23232b;
+  color: #e0e0e0;
+  border: 1px solid #3a2c1a;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 1rem;
+  font-family: 'Spectral', serif;
+}
+
+.ingredient-preview {
+  background: rgba(30, 30, 38, 0.8);
+  border-radius: 8px;
+  padding: 10px 16px;
+  margin-top: 8px;
+  color: #c7b77f;
+  font-size: 1rem;
+  box-shadow: 0 1px 4px #23232b;
+}
+
+.mixer-row {
+  display: flex;
+  flex-direction: row;
+  gap: 18px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background: #23232b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3a2c1a;
+  border-radius: 8px;
+}
+
+@media (max-width: 600px) {
+  main {
+    padding: 12px 4vw;
+    max-width: 98vw;
+  }
+  section {
+    padding: 10px 6px;
+  }
+  h2 {
+    font-size: 1.3rem;
+  }
+  .top-row {
+    flex-direction: column;
+    gap: 12px;
+    padding: 0;
+    min-height: unset;
+  }
+  .top-row > * {
+    padding: 0 8px;
+  }
+  .mixer-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

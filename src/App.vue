@@ -100,29 +100,22 @@ export default {
 
 <template>
   <main>
-    <GameTracker :key="gameTrackerKey" :gameData="gameData"></GameTracker>
-    <FeedbackPanel
-      :key="feedbackPanelKey"
-      :feedback="gameData.currentFeedback"
-    ></FeedbackPanel>
-    <IngredientInventory :inventoryData="gameData.inventory"></IngredientInventory>
-    <RequestDisplay :key="requestKey"></RequestDisplay>
+    <a href="/src/json/potionrequests.json">Answers (Cheats for alpha testing...)</a>
+    <div class="top-row">
+      <GameTracker :gameData="gameData" />
+      <FeedbackPanel :feedback="gameData.currentFeedback" />
+    </div>
+    <IngredientInventory :inventoryData="gameData.inventory" />
+    <RequestDisplay />
     <PotionMixer
       @newRequest="newRequest"
       @feedback="handleFeedback"
       :request="gameData.currentRequest"
       :inventory="gameData.inventory"
-    ></PotionMixer>
+    />
   </main>
 </template>
 
 <style scoped>
-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  padding: 20px;
-}
+
 </style>

@@ -19,11 +19,11 @@ export default {
 <template>
   <section>
     <div>
-      <p>Day: {{ gameData.dayProgress }}</p>
-      <p>Tries Left: {{ gameData.triesLeft }}</p>
+      <p><ins>Day:</ins> {{ gameData.dayProgress }}</p>
+      <p><ins>Tries Left:</ins> {{ gameData.triesLeft }}</p>
     </div>
     <div>
-      <p>Potions Made: {{ gameData.totalPotionsMade }}</p>
+      <p><ins>Potions Made:</ins> {{ gameData.totalPotionsMade }}</p>
     </div>
   </section>
 </template>
