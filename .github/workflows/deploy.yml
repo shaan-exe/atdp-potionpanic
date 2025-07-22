@@ -31,5 +31,5 @@ jobs:
         user: ${{ secrets.SFTP_USER }}
         pass: ${{ secrets.SFTP_PASS }}
         localDir: './dist'
-        remoteDir: '/shaandabomb/projects/p2'
+        remoteDir: '/shaandabomb'
         options: '--reverse --delete --verbose'
