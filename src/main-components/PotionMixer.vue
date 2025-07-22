@@ -28,10 +28,10 @@ export default {
     submitMix() {
       const selectedNames = this.selectedSlots.filter(ing => ing && ing.name).map(ing => ing.name)
       if (selectedNames.length === 0) {
-        this.$emit('feedback', 'Select at least one ingredient!')
+        this.$emit('feedback', 'Select at least one ingredient! You tried: (none)')
         return
       }
-      
+
       const possiblePotions = this.allPotions.filter(potion => potion.ingredients.length === selectedNames.length)
       let match = possiblePotions.find(potion => {
         const req = potion.ingredients
@@ -41,32 +41,37 @@ export default {
           req.every(name => selectedNames.includes(name))
         )
       })
-      if (!match) {
-        const orderMatch = possiblePotions.find(potion => {
-          const req = potion.ingredients
-          return (
-            selectedNames.length === req.length &&
-            selectedNames.every(name => req.includes(name)) &&
-            req.every(name => selectedNames.includes(name)) &&
-            !selectedNames.every((name, idx) => name === req[idx]) // same ingredients, wrong order
-          )
-        })
-        if (orderMatch) {
-          this.$emit('feedback', 'You have all the right ingredients, but the order is wrong!')
-          this.gameData.triesLeft -= 1
-          this.clearMixer()
-          return
-        }
 
+    
+      const orderMatch = possiblePotions.find(potion => {
+        const req = potion.ingredients
+        return (
+          selectedNames.length === req.length &&
+          selectedNames.every(name => req.includes(name)) &&
+          req.every(name => selectedNames.includes(name)) &&
+          !selectedNames.every((name, idx) => name === req[idx]) // same ingredients, wrong order
+        )
+      })
+      if (orderMatch) {
+        this.$emit(
+          'feedback',
+          `You have all the right ingredients, but the order is wrong! You tried: ${selectedNames.join(', ')}`
+        )
+        this.gameData.triesLeft -= 1
+        this.clearMixer()
+        return
+      }
+
+     
+      if (!match) {
         let feedbackMsg = ''
         if (possiblePotions.length > 0) {
-         
           const recipe = (this.request && this.request.ingredients) ? this.request.ingredients : possiblePotions[0].ingredients
           const correct = selectedNames.filter(name => recipe.includes(name))
           const incorrect = selectedNames.filter(name => !recipe.includes(name))
-          feedbackMsg = `Incorrect mix. ${correct.length > 0 ? 'Correct ingredient(s): ' + correct.join(', ') + '. ' : ''}${incorrect.length > 0 ? 'Not needed: ' + incorrect.join(', ') + '.' : ''}`
+          feedbackMsg = `Incorrect mix. ${correct.length > 0 ? 'Correct ingredient(s): ' + correct.join(', ') + '. ' : ''}${incorrect.length > 0 ? 'Not needed: ' + incorrect.join(', ') + '.' : ''} You tried: ${selectedNames.join(', ')}`
         } else {
-          feedbackMsg = 'No potion uses this number of ingredients.'
+          feedbackMsg = `No potion uses this number of ingredients. You tried: ${selectedNames.join(', ')}`
         }
         this.$emit('feedback', feedbackMsg)
         this.gameData.triesLeft -= 1
