@@ -16,7 +16,7 @@ export default {
 <template>
   <!-- this is a single item in the users inventory, along with its relevant details and images. -->
   <li>
-    <span v-if="item">{{ item.name }}</span>
+    <span v-if="item">{{ item.name }} <span v-if="item.quantity !== undefined">x{{ item.quantity }}</span></span>
   </li>
 </template>
 
