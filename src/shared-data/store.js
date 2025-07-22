@@ -8,6 +8,7 @@ export default {
         description:
           'A root known for its magical properties, often used in potions to enhance learning and memory.',
         rarity: 'common',
+        quantity: 5,
       },
       {
         name: 'Phoenix Feather',
@@ -15,6 +16,7 @@ export default {
         description:
           'A feather from a phoenix, known for its regenerative properties and used in potions to boost vitality.',
         rarity: 'rare',
+        quantity: 5,
       },
       {
         name: 'Dragon Scale',
@@ -22,6 +24,7 @@ export default {
         description:
           'A scale from a dragon, prized for its strength and used in potions to enhance physical resilience.',
         rarity: 'legendary',
+        quantity: 5,
       },
     ],
     mixerState: [],
