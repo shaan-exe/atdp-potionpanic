@@ -1,0 +1,35 @@
+name: Build and Deploy Vue App
+
+on:
+  push:
+    branches:
+      - main  
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Setup Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: '24.4.0'
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Build Vue Project
+      run: npm run build
+
+    - name: Upload via SFTP
+      uses: pressidium/lftp-mirror-action@v1
+      with:
+        host: ${{ secrets.SFTP_HOST }}
+        user: ${{ secrets.SFTP_USER }}
+        pass: ${{ secrets.SFTP_PASS }}
+        localDir: './dist'
+        remoteDir: '/shaandabomb/projects/p2'
+        options: '--reverse --delete --verbose'
