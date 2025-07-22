@@ -85,7 +85,8 @@ export default {
         this.request.name &&
         match.name === this.request.name
       ) {
-        this.$emit('newRequest')
+        this.gameData.dayProgress += 1; // <-- increment the day!
+        this.$emit('newRequest');
       }
     },
   },
