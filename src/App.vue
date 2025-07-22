@@ -79,7 +79,12 @@ export default {
         rarity: request.rarity,
       }
       console.log('Current request:', this.gameData.currentRequest)
-    }
+    },
+    handleFeedback(feedbackMsg) {
+      this.gameData.feedbackArray.push(feedbackMsg)
+      this.gameData.feedbackIndex = this.gameData.feedbackArray.length - 1
+      this.gameData.currentFeedback = feedbackMsg
+    },
   },
   computed: {
     //these will be "checks" of the current game state, like whether the player has won or lost, or if the game is still ongoing.
@@ -104,7 +109,7 @@ export default {
     <RequestDisplay :key="requestKey"></RequestDisplay>
     <PotionMixer
       @newRequest="newRequest"
-      @feedback="gameData.currentFeedback = $event"
+      @feedback="handleFeedback"
       :request="gameData.currentRequest"
       :inventory="gameData.inventory"
     ></PotionMixer>
