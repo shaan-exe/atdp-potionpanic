@@ -61,21 +61,24 @@ export default {
       
     },
     generateRequest() {
-      let randomIndex = Math.floor(Math.random() * this.PotionRequests.length)
-      let request = this.PotionRequests[randomIndex]
 
-      // Make an array of the ingredients in the request
-      let ingredients = request.ingredients
-
-      let curRequest = {
+      const dayObj = this.PotionRequests.find(
+        (d) => d.day === this.gameData.dayProgress + 1
+      )
+      if (!dayObj || !dayObj.requests.length) {
+        this.gameData.currentRequest = {}
+        return
+      }
+    
+      const randomIndex = Math.floor(Math.random() * dayObj.requests.length)
+      const request = dayObj.requests[randomIndex]
+      this.gameData.currentRequest = {
         name: request.name,
         description: request.description,
-        ingredients: request.ingredients, 
-
+        ingredients: request.ingredients,
+        rarity: request.rarity,
       }
-      this.gameData.currentRequest = curRequest
-      console.log(this.gameData.currentRequest)
-      console.log(this.currentRequest, 's')
+      console.log('Current request:', this.gameData.currentRequest)
     }
   },
   computed: {
