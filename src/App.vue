@@ -8,6 +8,7 @@ import PotionRequests from './json/potionrequests.json'
 import Ingredients from './json/ingredients.json'
 import store from './shared-data/store.js'
 import UserNameInput from './main-components/UserNameInput.vue'
+import GameEnd from './main-components/GameEnd.vue'
 import { reactive } from 'vue'
 let storeData = reactive(store)
 
@@ -18,7 +19,8 @@ export default {
     IngredientInventory,
     RequestDisplay,
     PotionMixer,
-    UserNameInput
+    UserNameInput,
+    GameEnd
 
     // each of the components will be initilized here.
   },
@@ -29,18 +31,37 @@ export default {
       gameData: storeData.gameData,
       PotionRequests: PotionRequests,
       Ingredients: Ingredients,
+      gameHasEnded: false,
+      gameResult: '',
 
     }
   },
   methods: {
-    //  checkWinOrLose() Evaluates win/lose state after every submission
-    checkWinOrLose() {
-      if (this.triesLeft <= 0) {
-        this.gameState = 'lost'
-      } else if (this.totalPotionsMade >= 10) {
-        this.gameState = 'won'
+    gameEnd(won){
+      let gameContainer = document.getElementById('game-container');
+      gameContainer.style.visibility = 'hidden';
+      this.gameHasEnded = true
+      if (won){
+        this.gameResult = 'WON'
+
       } else {
-        this.gameState = 'ongoing'
+        this.gameResult = 'LOST'
+
+
+      }
+    },
+    checkWinOrLose() {
+      console.log('Checking win/lose state...')
+      if (store.gameData.triesLeft <= 1) {
+        store.gameData.gameState = 'lost'
+        this.reportGameResult(false)
+        this.gameEnd(false)
+      } else if (this.gameData.dayProgress >= 8) {
+        store.gameData.gameState = 'won'
+        this.reportGameResult(true)
+        this.gameEnd(true)
+      } else {
+        store.gameData.gameState = 'ongoing'
       }
     },
     handleDayChange() {
@@ -104,8 +125,33 @@ export default {
       this.gameData.feedbackArray.push(feedbackMsg)
       this.gameData.feedbackIndex = this.gameData.feedbackArray.length - 1
       this.gameData.currentFeedback = feedbackMsg
-
+      this.checkWinOrLose()
     },
+    async reportGameResult(won) {
+  console.log('Reporting game result:', won ? 'Won' : 'Lost')
+
+  const token = '01980714-8b54-7b06-9dbb-d633f3876194';
+  const game = 'Potion Panic';
+  const player = this.gameData.userName;
+  const wonStatus = won;
+  const day = this.gameData.dayProgress;
+  const totalPotionsMade = this.gameData.totalPotionsMade;
+  const triesLeft = this.gameData.triesLeft-1;
+
+  const queryString = `?token=${encodeURIComponent(token)}&game=${encodeURIComponent(game)}&player=${encodeURIComponent(player)}&won=${encodeURIComponent(wonStatus)}&day=${encodeURIComponent(day)}&totalPotionsMade=${encodeURIComponent(totalPotionsMade)}&triesLeft=${encodeURIComponent(triesLeft)}`;
+
+  try {
+    await fetch(`https://atdpsites.berkeley.edu/aic/f/tracker/${queryString}`, {
+      method: 'GET',
+      mode:'no-cors'
+      //no CORS mode
+
+    })
+  } catch (err) {
+    console.error('Failed to report game result:', err)
+  }
+},
+
   },
   computed: {
     //these will be "checks" of the current game state, like whether the player has won or lost, or if the game is still ongoing.
@@ -122,7 +168,7 @@ export default {
 </script>
 
 <template>
-
+<GameEnd v-if="gameHasEnded" :result="gameResult" ></GameEnd>
 <UserNameInput @username-submitted="gameInit"></UserNameInput>
   <main id="game-container">
 

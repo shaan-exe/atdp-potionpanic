@@ -12,10 +12,11 @@ export default {
   methods: {
     handleSubmit() {
       if (this.username.trim() !== '') {
-        store.gameData.userName = this.username.trim()
-        this.$emit('username-submitted')
         let container = document.getElementById('username-input-container')
         container.style.display = 'none'
+        store.gameData.userName = this.username.trim()
+        this.$emit('username-submitted')
+
 
       } else {
         return
@@ -29,7 +30,7 @@ export default {
 </script>
 
 <template>
- <!--allow user to subit on enter key-->
+
  <div id="username-input-container">
   <header>
     <h1>POTION PANIC</h1>

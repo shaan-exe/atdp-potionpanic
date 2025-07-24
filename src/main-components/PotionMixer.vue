@@ -159,7 +159,7 @@ export default {
     this.selectedSlots = [null, null, null]
 
     }
-  },
+
 }
 </script>
 
