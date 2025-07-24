@@ -35,7 +35,8 @@ export default {
   <header>
     <h1>POTION PANIC</h1>
   </header>
-   <input v-model="username" placeholder="Username..." />
+  <label id="usernameLabel" for="usernameInput"></label>
+   <input id="usernameInput" v-model="username" placeholder="Username..." />
   <button @click="handleSubmit">Submit</button>
  </div>
 
