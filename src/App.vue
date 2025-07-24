@@ -7,6 +7,7 @@ import PotionMixer from './main-components/PotionMixer.vue'
 import PotionRequests from './json/potionrequests.json'
 import Ingredients from './json/ingredients.json'
 import store from './shared-data/store.js'
+import UserNameInput from './main-components/UserNameInput.vue'
 import { reactive } from 'vue'
 let storeData = reactive(store)
 
@@ -17,6 +18,7 @@ export default {
     IngredientInventory,
     RequestDisplay,
     PotionMixer,
+    UserNameInput
 
     // each of the components will be initilized here.
   },
@@ -49,10 +51,14 @@ export default {
 
     },
     gameInit() {
+      let gameContainer = document.getElementById('game-container');
+      gameContainer.style.visibility = 'visible';
+      console.log(store.gameData)
       this.gameData.dayProgress = 0
       this.gameData.triesLeft = 8
       this.gameData.totalPotionsMade = 0
       this.gameData.currentFeedback = store.gameData.feedbackArray[store.gameData.feedbackIndex]
+
     },
 
 
@@ -78,12 +84,27 @@ export default {
         ingredients: request.ingredients,
         rarity: request.rarity,
       }
+      //if the new request needs a potion from a previous day that the user hasnmt made yet- alert them of this in the form of feedback
+      if (this.gameData.currentRequest.ingredients.some(ing => !this.gameData.inventory.some(item => item.name === ing))) {
+
+        const missingIngredient = this.gameData.currentRequest.ingredients.filter(ing => !this.gameData.inventory.some(item => item.name === ing))
+        let feedbackObject = {
+
+
+          message: `You need to make the following before you can craft your current potion request: ${missingIngredient} `,
+          correct_ingredients: [],
+          incorrect_ingredients: [],
+          is_correct: false,
+        }
+        this.handleFeedback(feedbackObject)
+      }
       console.log('Current request:', this.gameData.currentRequest)
     },
     handleFeedback(feedbackMsg) {
       this.gameData.feedbackArray.push(feedbackMsg)
       this.gameData.feedbackIndex = this.gameData.feedbackArray.length - 1
       this.gameData.currentFeedback = feedbackMsg
+
     },
   },
   computed: {
@@ -93,13 +114,18 @@ export default {
     this.generateRequest()
   },
   mounted() {
-    this.gameInit()
+
+
+
   },
 }
 </script>
 
 <template>
-  <main>
+
+<UserNameInput @username-submitted="gameInit"></UserNameInput>
+  <main id="game-container">
+
     <a href="/src/json/potionrequests.json">Answers (Cheats for alpha testing...)</a>
     <div class="top-row"> <!--container for data- each component apart of this div is marked with a heading, see notes in component for more info-->
       <GameTracker :gameData="gameData" />

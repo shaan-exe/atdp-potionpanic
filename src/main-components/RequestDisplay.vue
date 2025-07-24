@@ -6,11 +6,11 @@ export default {
   data() {
     return {
       gameData: reactive(store.gameData),
-      
+
     }
   },
   methods: {
-    
+
   },
   computed: {
     //will most likely be used to check the current request against the player's inventory to see if they can fulfill it.

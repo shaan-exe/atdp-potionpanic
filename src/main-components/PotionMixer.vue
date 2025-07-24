@@ -26,9 +26,17 @@ export default {
       this.selectedSlots = [null, null, null]
     },
     submitMix() {
+
+
       const selectedNames = this.selectedSlots.filter(ing => ing && ing.name).map(ing => ing.name)
       if (selectedNames.length === 0) {
-        this.$emit('feedback', 'Select at least one ingredient! You tried: (none)')
+        let feedbackObject = {
+          message: 'You must select at least one ingredient!',
+          correct_ingredients: [],
+          incorrect_ingredients: [],
+          is_correct: false,
+        }
+        this.$emit('feedback', feedbackObject)
         return
       }
 
@@ -53,10 +61,14 @@ export default {
         )
       })
       if (orderMatch) {
-        this.$emit(
-          'feedback',
-          `You have all the right ingredients, but the order is wrong! You tried: ${selectedNames.join(', ')}`
-        )
+        let feedbackObject = {
+          message: `You have all the right ingredients, but the order is wrong! You tried: ${selectedNames.join(', ')}`,
+          correct_ingredients: selectedNames,
+          incorrect_ingredients: selectedNames.filter(name => !orderMatch.ingredients.includes(name)),
+          is_correct: false,
+
+        }
+        this.$emit('feedback', feedbackObject)
         this.gameData.triesLeft -= 1
         this.clearMixer()
         return
@@ -66,14 +78,20 @@ export default {
       if (!match) {
         let feedbackMsg = ''
         if (possiblePotions.length > 0) {
-          const recipe = (this.request && this.request.ingredients) ? this.request.ingredients : possiblePotions[0].ingredients
-          const correct = selectedNames.filter(name => recipe.includes(name))
-          const incorrect = selectedNames.filter(name => !recipe.includes(name))
+          var recipe = (this.request && this.request.ingredients) ? this.request.ingredients : possiblePotions[0].ingredients
+          var correct = selectedNames.filter(name => recipe.includes(name))
+          var incorrect = selectedNames.filter(name => !recipe.includes(name))
           feedbackMsg = `Incorrect mix. ${correct.length > 0 ? 'Correct ingredient(s): ' + correct.join(', ') + '. ' : ''}${incorrect.length > 0 ? 'Not needed: ' + incorrect.join(', ') + '.' : ''} You tried: ${selectedNames.join(', ')}`
         } else {
           feedbackMsg = `No potion uses this number of ingredients. You tried: ${selectedNames.join(', ')}`
         }
-        this.$emit('feedback', feedbackMsg)
+        let feedbackObject = {
+          message: feedbackMsg,
+          correct_ingredients: correct || [],
+          incorrect_ingredients: selectedNames.filter(name => !correct || !correct.includes(name)),
+          is_correct: false,
+        }
+        this.$emit('feedback', feedbackObject)
         this.gameData.triesLeft -= 1
         this.clearMixer()
         return
@@ -112,8 +130,15 @@ export default {
         })
       }
       this.gameData.totalPotionsMade += 1
+
+      let feedbackObject = {
+        message: `Successfully crafted ${match.name}! You used: ${selectedNames.join(', ')}`,
+        correct_ingredients: match.ingredients,
+        incorrect_ingredients: [],
+        is_correct: true,
+      }
+      this.$emit('feedback', feedbackObject)
       this.clearMixer()
-      this.$emit('feedback', `Successfully crafted ${match.name}! You used: ${selectedNames.join(', ')}`)
 
       if (
         this.request &&
@@ -129,6 +154,11 @@ export default {
     usedIngredientNames() {
       return this.selectedSlots.filter((item) => item !== null).map((item) => item.name)
     },
+  },
+  mounted() {
+    this.selectedSlots = [null, null, null]
+
+    }
   },
 }
 </script>

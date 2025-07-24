@@ -4,7 +4,15 @@ import { reactive } from 'vue'
 let storeData = reactive(store)
 export default {
   props: {
-    feedback: String,
+    feedback: {
+      type: Object,
+      default: () => ({
+        message: '',
+        correct_ingredients: [],
+        incorrect_ingredients: [],
+        is_correct: false,
+      }),
+    }
   },
   data() {
     return {
@@ -27,7 +35,12 @@ export default {
       this.open = !this.open
 
     }
-  }
+  },
+  computed: {
+    isFeedback() {
+      return this.gameData.feedbackIndex >= store.gameData.feedbackArray.length - 1
+    }
+  },
 }
 </script>
 
@@ -44,10 +57,33 @@ export default {
     <div v-if="open" class="feedback-content">
       <button @click="lastFeedback">Back...</button>
       <strong>
-        <h4 v-if="feedback">{{ feedback }}</h4>
+
+        <h4 v-if="feedback">{{ feedback.message}}</h4>
         <h4 v-else>Keep at it wizard! You've nearly earned your freedom...</h4>
+        <div v-if="feedback.correct_ingredients.length > 0" id="correct_ingredients">
+          <h3>Correct Ingredients: </h3>
+          <ul>
+            <li v-for="correct_ingredient in feedback.correct_ingredients"  :key="correct_ingredient" >
+              {{ correct_ingredient }}
+
+            </li>
+          </ul>
+
+        </div>
+        <div v-if="feedback.incorrect_ingredients.length > 0" id="incorrect_ingredients">
+          <h3>Incorrect Ingredients: </h3>
+          <ul>
+            <li v-for="incorrect_ingredient in feedback.incorrect_ingredients"  :key="incorrect_ingredient" >
+              {{ incorrect_ingredient }}
+
+            </li>
+          </ul>
+
+        </div>
+        <!-- if no feedback is next- disable the button-->
+
       </strong>
-      <button @click="nextFeedback">Next...</button>
+      <button :disabled="isFeedback" @click="nextFeedback">Next...</button>
     </div>
   </aside>
 </template>
@@ -125,4 +161,10 @@ button {
     font-size: 0.9rem;
   }
 }
+button:disabled {
+  background: #444;
+  color: #888;
+  cursor: not-allowed;
+}
+
 </style>
